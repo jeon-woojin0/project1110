@@ -1,3 +1,4 @@
+#퀘스트 1 계좌 클래스 만들기.
 import random as r
 
 class Account :#계좌 입출금 클래스
