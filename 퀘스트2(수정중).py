@@ -51,25 +51,26 @@ class Monster(Character) : #상속받음
         
 def battle(pl,mob) :
     print(f"{mob.name}과의 전투를 시작합니다")
-    while mob.hp > 0 or pl.hp > 0 : #둘다 살아있을 때까지 반복
-        dmg1=pl.attack_target()
-        mob.take_damage(dmg1)
-        print(f"{pl.name}이 {mob.name}에게 {dmg1}만큼 공격했다")
+    while pl.is_alive() and mob.is_alive() : #둘다 살아있을 때까지 반복
+        damage1=pl.attack_target()
+        mob.take_damage(damage1)
+        print(f"{pl.name}이 {mob.name}에게 {damage1}만큼 공격했다")
         print(f"{mob.name}의 체력: {mob.hp}")
-        if mob.hp <= 0:
+        if not mob.is_alive():
             break
-        dmg2=mob.attack_target()
-        pl.take_damage(dmg2) 
-        print(f"{mob.name}이 {pl.name}에게 {dmg2} 만큼 공격했다")
+        damage2=mob.attack_target()
+        pl.take_damage(damage2) 
+        print(f"{mob.name}이 {pl.name}에게 {damage2} 만큼 공격했다")
         print(f"{pl.name}의 체력: {pl.hp}")
 
-        if pl.hp > 0:
-            pl.gain_exp(mob.level*20) #gain_exp 안에 이미 레벨업 메소드 있음
-            print("전투 승리!")
-            return True
-        else :
-            print("전투 패배..")
-            return False
+    if pl.is_alive() :
+        pl.gain_exp(mob.level*20) #gain_exp 안에 이미 레벨업 메소드 있음
+        print("전투 승리!",end="\n")
+        return True
+    else :
+        print("전투 패배..")
+        return False
+        
             
 def main(pl,monster_dict):
 
@@ -81,9 +82,7 @@ def main(pl,monster_dict):
             return
 #-------------------------------------------
 #현재 문제 
-#1.계속 싸워야하는데 각자 공격 한번만 싸움
-#2.체력이 0이 되지도 않았는데 승리했다함
-#3. 기타 논리구조 오류
+#레벨업
 
 
 pl = Player('전우진')
